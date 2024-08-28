@@ -1,0 +1,61 @@
+#!/bin/bash
+
+echo "Cleanup initiated."
+
+# Function to delete contents of a directory
+delete_contents() {
+    local dir="$1"
+    echo "Deleting contents of $dir"
+    if [ -d "$dir" ]; then
+        find "$dir" -mindepth 1 -delete 2>/dev/null
+        echo "Contents of $dir have been deleted."
+    else
+        echo "Directory $dir does not exist."
+    fi
+}
+
+# Delete contents of /home/u/.cache
+delete_contents "/home/u/.cache"
+
+# Delete contents of /home/u/.local/share/Trash
+echo "Deleting contents of /home/u/.local/share/Trash"
+if [ -d "/home/u/.local/share/Trash" ]; then
+    rm -rf /home/u/.local/share/Trash/* 2>/dev/null
+    echo "Contents of /home/u/.local/share/Trash have been deleted."
+else
+    echo "Directory /home/u/.local/share/Trash does not exist."
+fi
+
+echo "Cleanup complete."
+
+echo "Update initiated."
+
+echo "Updating system packages..."
+
+sudo pacman -Syu
+
+echo "Updating AUR packages..."
+
+yay -Syu
+
+echo "Update complete."
+
+# Prompt for action
+echo "Choose an action:"
+echo "1. Reboot (default)"
+echo "2. Poweroff"
+echo "3. Nothing"
+read -p "Enter your choice (1-3): " choice
+case $choice in
+    2)
+        echo "Powering off..."
+        sudo poweroff
+        ;;
+    3)
+        echo "Exiting without further action."
+        ;;
+    *)
+        echo "Rebooting..."
+        sudo reboot
+        ;;
+esac
