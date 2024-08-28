@@ -2,7 +2,7 @@ Here's a sample README for your GitHub repository that contains the provided Bas
 
 ---
 
-# UPD - Simple Update Script for Arch Linux
+# UPD - Update Script for Arch Linux
 
 This repository contains a simple Bash script to automate system maintenance tasks on a Linux machine. The script performs the following actions:
 
